@@ -1,2 +1,2 @@
 #!/bin/bash
-type /tmp/12-file_type
+file /tmp/12-file_type
