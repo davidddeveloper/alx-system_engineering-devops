@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+hours=12
+hour=0
+
+while [ "$hours" -gt 0 ]
+do
+	minutes=1
+	echo "Hour: $hour"
+	while [ "$minutes" -le 60 ]
+	do
+		if [ $minutes -eq 60 ]
+		then
+			((hour++))
+		else
+			echo "$minutes"
+		fi
+		((minutes++))
+	done
+
+	((hours--))
+done
