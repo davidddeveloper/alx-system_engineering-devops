@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# displays To infinity and beyond indefinitely
+# displays I am invincible!!! when receiving a SIGTERM signal
+# shellcheck disable=SC2034
+
+trap "echo 'I am invincible!!!'" SIGTERM
+while [ "$((i=1))" -gt 0 ]
+do
+	echo "To infinity and beyond"
+	sleep 2
+done
