@@ -13,7 +13,7 @@ file="/var/run/myscript.pid"
 touch "$file"
 
 # when receiving a SIGTERM OR SIGINT signal
-trap "rm -r $file"
+trap "rm -r $file; exit"
 
 # when receiving a SIGTERM signal
 trap "echo 'I hate the kill command'" SIGTERM
