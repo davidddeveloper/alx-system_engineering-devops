@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# sends a sigterm signal to 7-highlander
+
+pid="$(pgrep -f 7-highlander)"
+echo "$pid"
+kill -15 "$pid"
