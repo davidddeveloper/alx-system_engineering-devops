@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# automate the git add git commit git push process
+
+# get file and additional message
+file="$0"
+additional_msg=$1
+
+# git add
+git add "$file"
+
+# git commit with additional message
+git commit -m "$file $additional_msg"
+
+# git push
+git push
