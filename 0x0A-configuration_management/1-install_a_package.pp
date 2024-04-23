@@ -8,6 +8,6 @@ package { 'python3-pip':
 # Package resource to install flask using pip
 package { 'flask':
   ensure   => '2.1.0', # Version of Flask
-  provider => 'pip', # Use pip to install flask
+  provider => 'pip3', # Use pip to install flask
   require  => Package['python3-pip'], # Ensure that pip is installed 
 }
