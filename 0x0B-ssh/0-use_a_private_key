@@ -1,3 +1,4 @@
+#!usr/bin/env bash
 # A script that connects to a server using ssh
 
 username="ubuntu"
