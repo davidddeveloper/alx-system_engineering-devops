@@ -1,0 +1,6 @@
+# A script that connects to a server using ssh
+
+username="ubuntu"
+host_ip="54.236.54.158"
+
+ssh "$username"@"$host_ip"
