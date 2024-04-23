@@ -6,4 +6,4 @@ bits=4096
 passphrase="betty"
 
 # generates key pair
-ssh-keygen -f "$filename" -N "$betty" -b "$bits"
+ssh-keygen -f "$filename" -N "$passphrase" -b "$bits"
