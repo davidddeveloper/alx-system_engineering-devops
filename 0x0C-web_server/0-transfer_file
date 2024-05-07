@@ -10,5 +10,5 @@ else
 	username="$3"
 	path_to_ssh_key="$4"
 
-	scp -i "$path_to_ssh_key" "$path_to_file" "$username@$server_ip:/"
+	scp -i "$path_to_ssh_key" "$path_to_file" "$username@$server_ip:~/"
 fi
