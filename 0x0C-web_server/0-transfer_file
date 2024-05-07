@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# a Bash script that transfers a file from our client to a server
+
+path_to_file="$1"
+server_ip="$2"
+username="$3"
+path_to_ssh_key="$4"
+
+scp -i "$path_to_ssh_key" "$path_to_file" "$username"@"$server_ip"
