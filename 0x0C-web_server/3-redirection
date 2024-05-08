@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# Configure an  Nginx server so that /redirect_me is redirecting to another page.
 # Define the configuration file path
 config_file="/etc/nginx/sites-available/default"
 
