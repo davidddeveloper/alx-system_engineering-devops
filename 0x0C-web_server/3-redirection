@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Configure an  Nginx server so that /redirect_me is redirecting to another page.
+
 # Define the configuration file path
 config_file="/etc/nginx/sites-available/default"
 
@@ -9,6 +10,9 @@ redirect_block="
                 # redirect to https://www.youtube.com/watch?v=QH2-TGUlwu4
                 return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
 	}"
+
+# Install nginx and make basic configuration in another script
+./1-install_nginx_web_server > /dev/null 2>&1
 
 # Check if the block already exists in the configuration file
 if grep -q "location /redirect_me" "$config_file"; then
