@@ -1,5 +1,33 @@
 #!/usr/bin/env bash
 # configure web-02 to be identical to web-01
 # add a custom Nginx response header
-# 
+# shellcheck disable=SC2154
 
+# Basic configurations of nginx
+./4-not_found_page_404 > /dev/null 2>&1
+
+# custom Nginx response header
+# Define the configuration file path
+config_file="/etc/nginx/sites-available/default"
+
+# Define the line to be added
+line_to_insert="
+	# Custom header
+        add_header X-Served-By \"$hostname\";"
+
+# Check if the line already exists in the configuration file
+if grep -q "add_header X-Served-By" "$config_file"; then
+    echo "404 config line already exists. Skipping..."
+    exit 0
+fi
+
+# Add the line using sed
+#sed -i "/server_name _;/a $redirect_block" "$config_file"
+sudo sed -i "/server_name _;/r /dev/stdin" "$config_file" <<< "$line_to_insert"
+
+
+# Restart Nginx to apply the changes
+sudo service nginx stop
+sudo service nginx start
+
+echo "Line inserted successfully"
