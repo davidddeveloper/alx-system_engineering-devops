@@ -3,6 +3,8 @@
 # add a custom Nginx response header
 # shellcheck disable=SC2154
 
+host_name=$(hostname)
+
 # Basic configurations of nginx
 ./4-not_found_page_404 > /dev/null 2>&1
 
@@ -12,8 +14,7 @@ config_file="/etc/nginx/sites-available/default"
 
 # Define the line to be added
 line_to_insert="
-	# Custom header
-        add_header X-Served-By \"$hostname\";"
+        add_header X-Served-By $host_name;"
 
 # Check if the line already exists in the configuration file
 if grep -q "add_header X-Served-By" "$config_file"; then
