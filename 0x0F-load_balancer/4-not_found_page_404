@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Configure an nginx server to have a custom 404 page
+# that contains Ceci n'est pas une page
+
+# Define the configuration file path
+config_file="/etc/nginx/sites-available/default"
+
+# Define the line to be added
+line_to_insert="
+        error_page 404 /404.html;"
+file_to_create="/var/www/html/404.html"
+
+# Install nginx and make basic configuration in another script
+./3-redirection > /dev/null 2>&1
+
+# Check if the line already exists in the configuration file
+if grep -q "error_page 404" "$config_file"; then
+    echo "404 config line already exists. Skipping..."
+    exit 0
+fi
+
+# Add the line using sed
+#sed -i "/server_name _;/a $redirect_block" "$config_file"
+sudo sed -i "/server_name _;/r /dev/stdin" "$config_file" <<< "$line_to_insert"
+echo "Ceci n'est pas une page" > $file_to_create
+
+
+# Restart Nginx to apply the changes
+sudo service nginx stop
+sudo service nginx start
+
+echo "Redirect block added successfully."

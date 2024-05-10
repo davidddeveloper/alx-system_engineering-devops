@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# a script that install nginx web server and configures it.
+
+# update packages
+sudo apt-get update
+
+# install nginx
+sudo apt-get -y install nginx
+
+# configure nginx
+sudo chown "$USER":"$USER" /var/www/html/
+echo "Hello World!" > /var/www/html/index.html
+
+# start nginx
+sudo service nginx start
