@@ -6,7 +6,7 @@
 host_name=$(hostname)
 
 # Basic configurations of nginx
-#./4-not_found_page_404 > /dev/null 2>&1
+./4-not_found_page_404 > /dev/null 2>&1
 
 # custom Nginx response header
 # Define the configuration file path
