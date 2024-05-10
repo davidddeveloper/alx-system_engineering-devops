@@ -18,12 +18,26 @@ frontend frontends
 
 backend servers
         balance roundrobin
-        server server1 100.27.2.98 check
-        server server2 54.144.145.14 check"
+        server server1 100.27.2.98
+        server server2 54.144.145.14"
 
 # apply configuration
+# check if block exists before appending
+if grep -q "default_backend servers" "$config_file"; then
+    echo "Block already exists. Skipping..."
+    exit 0
+fi
 echo "$config_text" | sudo tee -a "$config_file"
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
+# for haproxy to be initialized with init
+config_file="/etc/default/haproxy"
+
+# check if line exist before appending
+if grep -q "ENABLED=1" "$config_file"; then
+    echo "Line already exists. Skipping..."
+    exit 0
+fi
+echo "ENABLED=1" | sudo tee -a "$config_file"
 
 # start haproxy
 sudo service haproxy start
