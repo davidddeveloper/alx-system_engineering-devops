@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# a Bash script that configures an nginx server to listen on port 80
+
+config_line="
+	listen 80 default_server;
+	listen [::]:80 default_server;
+"
+
+# check if the line exists
+if grep -q "listen 80 default_server;" "$config_file"; then
+	echo "Line already exists. Skipping..."
+fi
+
+if grep -q "listen [::]:80 default_server;" "$config_file"; then
+	echo "Line already exists. Skipping..."
+	exit
+fi
+
+# Add the block using sed
+#sed -i "/server_name _;/a $redirect_block" "$config_file"
+# remove line
+sudo sed -i "/^listen 80/d" "$config_file"
+sudo sed -i "/^/listen [::]:80" "$config_file"
+
+sudo sed -i "/server _;/i\\$config_line" "$config_file"
+#sudo sed -i "/server_name _;/r /dev/stdin" "$config_file" <<< "$config_line"
+
+
+# Restart Nginx to apply the changes
+sudo service nginx stop
+sudo service nginx start
