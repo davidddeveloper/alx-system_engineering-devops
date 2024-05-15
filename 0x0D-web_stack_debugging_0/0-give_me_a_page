@@ -1,2 +1,16 @@
 #!/usr/bin/env bash
-docker run -p 8080:80 -d holbertonschool/265-0
+# this script install apache2
+
+# install apache2
+sudo apt update
+sudo apt-get install apache2
+
+# configure apache2
+file="/var/www/html/index.html"
+file_copy="/var/www/html/xzy"
+
+sudo touch "$file_copy"
+sudo cp "$file" "$file_copy"
+echo "Hello Holberton" | tee "$file" > /dev/null
+
+sudo service apache2 start
