@@ -40,4 +40,5 @@ fi
 echo "ENABLED=1" | sudo tee -a "$config_file"
 
 # start haproxy
+sudo service haproxy stop
 sudo service haproxy start
