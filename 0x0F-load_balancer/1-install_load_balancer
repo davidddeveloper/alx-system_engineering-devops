@@ -18,8 +18,8 @@ frontend frontends
 
 backend servers
         balance roundrobin
-        server server1 100.27.2.98
-        server server2 54.144.145.14"
+        server server1 54.144.251.105
+        server server2  54.90.53.190"
 
 # apply configuration
 # check if block exists before appending
