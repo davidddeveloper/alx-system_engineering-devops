@@ -2,6 +2,7 @@
 # a Bash script that configures an nginx server to listen on port 80
 
 config_file="/etc/nginx/sites-available/default"
+
 #config_line="
 #	listen 80 default_server;
 #	listen [::]:80 default_server;
@@ -23,13 +24,15 @@ config_file="/etc/nginx/sites-available/default"
 #sudo sed -i "/^listen 80/d" "$config_file"
 #sudo sed -i "/^/listen [::]:80" "$config_file"
 
-if sed -n '/listen 80 default_server/p'; then
+# check if "listen 80 default_server" exist
+if grep -q '/listen 80 default_server/p' "$config_file"; then
 	echo "Pattern found doing noting"
 else
 	sudo sed -i 's/listen [0-9]\+/listen 80/g' "$config_file"
 fi
 
-if sed -n '/listend [::]:80 default_server/p'; then
+# check if "listen [::]:80 default_server" exist
+if grep -q '/listen [::]:80 default_server/p' "$config_file"; then
 	echo "Pattern 2 found doing nothing"
 else
 	sudo sed -i 's/listen \[\:\:\]\:[0-9]\+/listen \[\:\:\]\:80/g' "$config_file"
