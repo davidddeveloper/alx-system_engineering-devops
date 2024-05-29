@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#a Bash script that will display information about subdomains.
+
+domain="$1"

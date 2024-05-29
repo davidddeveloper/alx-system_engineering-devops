@@ -37,10 +37,10 @@ frontend frontends
         bind *:80
 	bind *:443 ssl crt /etc/ssl/certs/daveconteh.tech.pem
 	http-request redirect scheme https unless { ssl_fc }
-
+	mode http
         default_backend servers
 
 backend servers
         balance roundrobin
-        server server1 54.144.251.105
-        server server2  54.90.53.190
+        server server1 54.144.251.105:80 check
+        server server2  54.90.53.190:80 check
