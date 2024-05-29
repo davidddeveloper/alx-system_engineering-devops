@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run Nginx as Nginx
+# run Nginx as Nginx
 
 #sh -c 'su nginx ; service nginx start ; exit'
 
@@ -16,7 +16,8 @@ sudo sed -i 's/listen \[\:\:\]\:[0-9]\+/listen \[\:\:\]\:8080/g' "$default_confi
 # give nginx user priviledges to the following folders
 sudo chown -R nginx:nginx /var/www/html
 sudo chown -R nginx:nginx /var/log/nginx
+sudo chown -R nginx:nginx /etc/nginx
 
 # restart nginx
 sudo service nginx stop
-sudo service nginx start
+sudo service nginx start -u nginx
