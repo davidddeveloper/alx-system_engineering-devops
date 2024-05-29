@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# A script that runs the whoami command under a user passed as an argument
+
+user="$1"
+
+if [ "$user" ]; then
+	runuser "$user" -c whoami
+else
+	whoami
+fi
