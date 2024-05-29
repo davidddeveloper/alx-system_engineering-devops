@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Run Nginx as Nginx
+
+sh -c 'su nginx ; service nginx start ; exit'
