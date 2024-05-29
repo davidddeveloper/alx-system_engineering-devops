@@ -1,4 +1,22 @@
 #!/usr/bin/env bash
 # Run Nginx as Nginx
 
-sh -c 'su nginx ; service nginx start ; exit'
+#sh -c 'su nginx ; service nginx start ; exit'
+
+config_file="/etc/nginx/nginx.conf"
+default_config_file="/etc/nginx/sites-available/default"
+
+# append user nginx in nginx.conf file
+sed -i '1i\user nginx' $config_file
+
+# configure nginx to listen on port 8080
+sudo sed -i 's/listen [0-9]\+/listen 8080/g' "$default_config_file"
+sudo sed -i 's/listen \[\:\:\]\:[0-9]\+/listen \[\:\:\]\:8080/g' "$default_config_file"
+
+# give nginx user priviledges to the following folders
+sudo chown -R nginx:nginx /var/www/html
+sudo chown -R nginx:nginx /var/log/nginx
+
+# restart nginx
+sudo service nginx stop
+sudo service nginx start
