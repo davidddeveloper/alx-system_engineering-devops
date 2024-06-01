@@ -1,0 +1,20 @@
+#!/usr/env bash
+# Create a MySQL user named holberton_user on both web-01 and web-02
+
+server_1_ip="$1"
+server_2_ip="$2"
+path_2_private_key="$3"
+sql_command="
+	CREATE USER IF NOT EXISTS holberton_user@localhost IDENTIFIED BY projectcorrection280hbtn;
+GRANT ALL ON *.* TO holberton_user@localhost;
+"
+
+if [ "$#" lt 3 ]; then
+	echo "usage: $0 0.0.0.0 0.0.0.0 /key
+	exit 0
+
+# server one
+ssh -i private_key ubuntu@"$server_1_ip" "echo $sql_command | sudo mysql -u root"
+
+# server two
+ssh -i private_key ubuntu@"$server_2_ip" "echo $sql_command | sudo mysql -u root"
