@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# this script setup mysql slave on web-02 or replication
+
+# Show help
+if [ "$1" == '-h' ] || [ "$1" == 'help' ]; then
+	echo "$0 master_ip master_log_pos master_log_file"
+	echo "example"
+	echo "$0 127.0.0.1 154 mysql-bin.000001"
+	exit 0
+fi
+
+master_ip="$1"
+master_log_pos="$2"
+master_log_file="$3"
+config_file="/etc/mysql/mysql.conf.d/mysqld.cnf"
+config_text="
+server-id               = 2
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_do_db            = tyrell_corp
+relay-log               = /var/log/mysql/mysql-relay-bin.log
+"
+sql_command="CHANGE MASTER TO MASTER_HOST='$master_ip', MASTER_USER='replica_user', MASTER_PASSWORD='xyz+Dave001', MASTER_LOG_FILE='$master_log_file', MASTER_LOG_POS=$master_log_pos;"
+
+# if [grep -q '# bind-address' ]; then
+   # echo 'you already commented out bind-address'
+# 
+# else
+    # comment out bind-address
+    # sed -i 's/^\(bind-address)/# \1/' "$config_file"
+# fi
+
+# import the snapshot of tyrell_corp.sql
+sudo sh -c 'mysql tyrell_corp < /tmp/tyrell_corp.sql'
+
+# configure slave
+echo "$config_text" | sudo tee -a "$config_file"
+sudo service mysql stop
+sudo service mysql start
+
+# configure replication
+sudo mysql -u root -e "$sql_command"
+
+# start replication
+echo "START SLAVE;" | sudo mysql -u root
+echo "SHOW SLAVE STATUS\G;" | sudo mysql -u root

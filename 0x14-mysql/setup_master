@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# this script setup mysql master on web-01 for replication
+# it should push the sql dump to slave(replica) web-02
+
+if [ "$1" == '-h' ] || [ "$1" == 'help' ]; then
+	echo "Usage: $0 priv_key slave_ip"
+	exit 0
+fi
+config_file="/etc/mysql/mysql.conf.d/mysqld.cnf"
+config_text="
+server-id        = 1
+log_bin          = /var/log/mysql/mysql-bin.log # binary log - record changes made to the db in binary formart
+binlog_do_db     = tyrell_corp
+"
+sql_command="FLUSH TABLES WITH READ LOCK; SHOW MASTER STATUS;"
+priv_key="$1"
+slave_ip="$2"
+
+if grep -q '# bind-address' "$config_file"; then
+    echo 'you already commented out bind-address'
+
+else
+    # comment out bind-address
+    sudo sed -i 's/^\(bind-address\)/# \1/' "$config_file"
+fi
+
+# configure master 
+echo "$config_text" | sudo tee -a "$config_file"
+sudo service mysql stop
+sudo service mysql start
+
+# Get Binary log coordinates
+echo "$sql_command" | sudo mysql -u root
+
+# create a dump
+sudo sh -c 'mysqldump tyrell_corp > tyrell_corp.sql'
+
+# push dump to slave
+if [ "$priv_key" ] || [ "$slave_ip" ]; then
+	scp -i "$priv_key" tyrell_corp.sql "ubuntu@$slave_ip:/tmp/"
+else
+	echo "You'll have to manually push the dump file to slave"
+fi
+
+echo "UNLOCK TABLES" | sudo mysql -u root
