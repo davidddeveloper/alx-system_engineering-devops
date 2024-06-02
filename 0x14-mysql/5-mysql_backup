@@ -4,7 +4,7 @@
 
 pwd="$1"
 # create the dump
-sudo sh -c "mysqldump -u root -p '$pwd' --all-databases > backup.sql"
+sudo sh -c "mysqldump -u root -p'$pwd' --all-databases > backup.sql"
 
 # create a archive from it
 tar -zcv -f "$(date +"%d-%m-%y").tar.gz" backup.sql
