@@ -38,7 +38,7 @@ But this part is crucial, so I'm going to show you here
 
 ## STEP 4: SETUP MASTER
   ### step 1
-    open this file: vi /etc/mysql/mysql.conf.d/mysqld.cnf
+    open this file: sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
   ### step 2: add the following
     add the following
     server-id        = 1
@@ -48,8 +48,68 @@ But this part is crucial, so I'm going to show you here
   note: remember to comment this line if you see it
       bind-address 127.0.0.1
 
-  ### step 3: 
+  ### step 3: find coordinates of master
+  the slave is going to need two coordinates
+  the binary-log file and the position to read from
+  here's how to find those information
+  
+    FLUSH TABLES WITH READ LOCK;
+    SHOW MASTER STATUS;
 
+  status should look like this
+  
+    mysql-bin.000002        154     tyrell_corp,tyrell_corp
+
+  ### step 4: create a dump utility
+  a dump is a backup of your database, the slave is going to need it so let's create it
+
+    example: sudo mysqldump tyrell_corp > tyrell_corp.sql
+
+  At this point you should now know the following information
+    - binary log file
+    - position to read from
+    - sql backup
+
+  note: make sure to transfer your sql backup to the server where mysql slave resides
+  
+      example: scp -i /vagrant/key backup.sql ubuntu@ip:/tmp/
+
+STEP 5: setup slave
+again i've written a script, but i'm going to show you here how to do it.
+  step 1: 
+  
+    open this file: sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+  step 2: add the following
+  
+    server-id               = 2
+    log_bin                 = /var/log/mysql/mysql-bin.log
+    binlog_do_db            = tyrell_corp
+    relay-log               = /var/log/mysql/mysql-relay-bin.log 
+    # Contain everything read from master bin log
+    # Store events that need to be applied to slave db locally
+    # Events are read from relay log and applied to slave
+
+  step 3: configure the replication by running the following in mysql server
+  
+    configure replication by running
+    CHANGE MASTER TO
+    MASTER_HOST='master_ip',
+    MASTER_USER='replica_user',
+    MASTER_PASSWORD='password#70',
+    MASTER_LOG_FILE='mysql-bin.000001',
+    MASTER_LOG_POS=154;
+
+  this is just an example, remember to replace
+  MASTER_LOG_POS, MASTER_LOG_FILE, MASTER_PASSWORD (the password you set for replica_user)
+  with you own from above, where you setup master
+
+  ### step 4: start slave
+    START SLAVE;
+    SHOW SLAVE STATUS\G;
+
+## Step 6: confirm replication
+if you have no errors up to this point it means replication should now wrok, but to confirm try doing something in master the replication
 
 
 
