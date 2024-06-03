@@ -109,7 +109,24 @@ again i've written a script, but i'm going to show you here how to do it.
     SHOW SLAVE STATUS\G;
 
 ## Step 6: confirm replication
-if you have no errors up to this point it means replication should now wrok, but to confirm try doing something in master the replication
+if you have no errors up to this point it means replication should now wrok, but to confirm try doing some operation in master
+
+    example:
+      USE tyrell_corp;
+      INSERT INTO nexus6 (name) VALUES ('David'), ('Ben');
+      SELECT * FROM nexus6;
+        id  | name
+        1   | David
+        2   | Ben
+
+Now go to you replica/slave server and select
+
+    SELECT * FROM nexus6;
+        id  | name
+        1   | David
+        2   | Ben
+
+If you see the same output it means replica is setup correctily.
 
 
 
