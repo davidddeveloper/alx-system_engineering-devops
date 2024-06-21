@@ -19,6 +19,9 @@ reddit = praw.Reddit(
 
 def number_of_subscribers(subreddit):
     """ subscribers count """
-    subreddit = reddit.subreddit(subreddit_name)
-    subscribers = subreddit.subscribers
-    return subscribers
+    try:
+        subreddit = reddit.subreddit(subreddit_name)
+        subscribers = subreddit.subscribers
+        return subscribers
+    except Exception:
+        return 0
