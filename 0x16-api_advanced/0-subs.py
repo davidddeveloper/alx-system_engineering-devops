@@ -16,7 +16,8 @@ reddit = praw.Reddit(
         )
 
 
-def get_subreddit_count(subreddit_name):
+def number_of_subscribers(subreddit)
+    """ subscribers count """
     subreddit = reddit.subreddit(subreddit_name)
     subscribers = subreddit.subscribers
     return subscribers
