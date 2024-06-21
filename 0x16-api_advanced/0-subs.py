@@ -6,7 +6,8 @@ import praw
 
 client_id = '34s4jgg_lvfFbwwAF2-LmA'
 client_secret = 'F1nH_e_TAMQs5TjF_De0KcBvhEsQcQ'
-user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+user_agent = f'{user_agent} (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
 
 reddit = praw.Reddit(
         client_id=client_id,
@@ -16,7 +17,7 @@ reddit = praw.Reddit(
         )
 
 
-def number_of_subscribers(subreddit)
+def number_of_subscribers(subreddit):
     """ subscribers count """
     subreddit = reddit.subreddit(subreddit_name)
     subscribers = subreddit.subscribers
