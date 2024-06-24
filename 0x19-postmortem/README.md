@@ -40,4 +40,5 @@ Developing with a view of scaling
 storyafrika is committed to keep you locked to inspiring african story, we appreciate your patience and again apologize for any impact this may have caused.
 
 sincerely,
+
 Storyafrika Sysadmin and Development team
