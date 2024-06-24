@@ -1,3 +1,4 @@
+# a puppet manifest that create an index.html file for apche2 to run corectly
 $content_val = '<!DOCTYPE html>
 <head>
 <title>Holberton &#8211; Just another WordPress site</title>
