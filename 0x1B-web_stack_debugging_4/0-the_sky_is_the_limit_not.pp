@@ -1,3 +1,5 @@
+# a puppet manifest that increases the ulimit of nginx
+
 $file_path='/etc/default/nginx'
 $content = "ULIMIT=\"-n 4096\""
 
