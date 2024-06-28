@@ -19,3 +19,35 @@
     # strace child process
 
     strace -f <pid>
+
+## tmux
+`tmux` - is a powerful linux command line that lets you run multiple command lines. The beauty of tmux is sessions and detaching from sessions allowing us to run multiple application on the background given us the ability to come back to them.
+
+` common most useful commands `
+` create a session ` - tmux
+` create a named session ` - tmux new -s mysession
+` creates a split screen (horizontal) ` - ctrl + b "
+` creates a split screen (vertical) ` ctrl + b %
+` moving around screens ` - ctrl + b arrows
+` delete a session ` - ctl + b x
+` detaching from a session ` - ctrl + b d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
